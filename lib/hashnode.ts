@@ -2,7 +2,7 @@ import { GraphQLClient, gql } from 'graphql-request';
 
 const HASHNODE_API_URL = 'https://gql.hashnode.com';
 // TODO: Replace with user's actual publication host
-const PUBLICATION_HOST = 'arindm.hashnode.dev';
+const PUBLICATION_HOST = 'arindamchakraborty.hashnode.dev';
 
 const client = new GraphQLClient(HASHNODE_API_URL);
 
