@@ -1,28 +1,280 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #ededed;
+  --bg: #0c0c0b;
+  --surface: #141412;
+  --fg: #eceae3;
+  --muted: #8f8c82;
+  --line: rgba(236, 234, 227, 0.14);
+  --accent: #ff5a2b;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f3f0e9;
+  --surface: #eae6dc;
+  --fg: #12120f;
+  --muted: #66635b;
+  --line: rgba(18, 18, 15, 0.16);
+  --accent: #dc3f14;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ededed;
-    --foreground: #ededed;
+@utility shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 100rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
   }
 }
 
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Underline that draws in from the left and leaves to the right. */
+@utility link-underline {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-expo);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+html {
+  background: var(--bg);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+section[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* Film grain over everything, so flat colour never looks flat. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* If scripts never run, the intro curtain still gets out of the way. */
+.intro-curtain {
+  animation: intro-failsafe 0.01s 5s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Theme switch: the new theme wipes in as a circle from the toggle. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Project illustrations */
+.viz-spin {
+  transform-origin: 200px 200px;
+  animation: viz-spin 36s linear infinite;
+}
+
+.viz-spin-slow {
+  transform-origin: 200px 200px;
+  animation: viz-spin 64s linear infinite reverse;
+}
+
+.viz-spin-fast {
+  transform-origin: 200px 200px;
+  animation: viz-spin 22s linear infinite;
+}
+
+.viz-dash {
+  animation: viz-dash 1.6s linear infinite;
+}
+
+.viz-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: viz-ping 2.8s var(--ease-expo) infinite;
+}
+
+.viz-scan {
+  animation: viz-scan 4.5s var(--ease-swift) infinite alternate;
+}
+
+.viz-blink {
+  animation: viz-blink 4.5s ease-in-out infinite;
+}
+
+.viz-wave {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: viz-wave 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes viz-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes viz-dash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes viz-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+@keyframes viz-scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(250px);
+  }
+}
+
+@keyframes viz-blink {
+  0%,
+  18% {
+    opacity: 0;
+  }
+  30%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes viz-wave {
+  from {
+    transform: scaleY(0.18);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Long-form posts pulled from Hashnode */
+.prose-theme {
+  --tw-prose-body: color-mix(in srgb, var(--fg) 82%, transparent);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--line);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-kbd: var(--fg);
+  --tw-prose-code: var(--fg);
+  --tw-prose-pre-code: #eceae3;
+  --tw-prose-pre-bg: #141412;
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+}
+
+.prose-theme pre {
+  border: 1px solid var(--line);
+}
+
+.prose-theme img {
+  border-radius: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

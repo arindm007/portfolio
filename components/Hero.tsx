@@ -1,47 +1,85 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import AgentField from "@/components/AgentField";
+import { useIntroReady } from "@/components/Intro";
+import { FadeIn, RevealText, Rule } from "@/components/Reveal";
+import { profile } from "@/lib/data";
 
 export default function Hero() {
-    return (
-        <section className="py-20 md:py-32">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-                    <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-                        <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                            <span className="block xl:inline">Hi, I'm</span>{' '}
-                            <span className="block text-indigo-600 xl:inline">Arindam Chakraborty</span>
-                        </h1>
-                        <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                            I build accessible, pixel-perfect, performant, and web experiences. Passionate about modern web technologies and creating intuitive user interfaces.
-                        </p>
-                        <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link
-                                    href="/#projects"
-                                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                                >
-                                    View Projects
-                                </Link>
-                                <Link
-                                    href="/blog"
-                                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                                >
-                                    Read Blog
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-                        <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md overflow-hidden">
-                            {/* Placeholder for profile image */}
-                            <div className="aspect-w-1 aspect-h-1 bg-gray-200 w-full h-96 flex items-center justify-center text-gray-400">
-                                <span className="text-lg">Profile Image Placeholder</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+  const ready = useIntroReady();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const fieldY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+
+  return (
+    <section ref={ref} className="relative flex min-h-svh flex-col justify-end overflow-hidden">
+      <motion.div
+        className="absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_2%,black_16%,black_45%,transparent_96%)]"
+        style={{ y: fieldY }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ duration: 2.2, delay: 0.3 }}
+      >
+        <AgentField className="h-full w-full" />
+      </motion.div>
+
+      <motion.div className="shell relative z-10 pb-8 pt-24 md:pb-10" style={{ y, opacity }}>
+        <FadeIn show={ready} delay={0.5} y={10} className="mb-5 flex items-center gap-3 md:mb-6">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
+            <span className="relative inline-flex size-2 rounded-full bg-accent" />
+          </span>
+          <p className="label-mono">
+            {profile.role} — {profile.company}
+          </p>
+        </FadeIn>
+
+        <h1
+          className="font-serif text-[clamp(3.75rem,min(16.5vw,27svh),19rem)] leading-[0.84] tracking-[-0.035em]"
+          aria-label={profile.name}
+        >
+          <RevealText text={profile.firstName} by="char" show={ready} delay={0.1} className="block" />
+          <RevealText
+            text={profile.lastName}
+            by="char"
+            show={ready}
+            delay={0.28}
+            className="block text-right italic"
+          />
+        </h1>
+
+        <Rule show={ready} delay={0.7} className="mt-6 md:mt-8" />
+
+        <div className="grid grid-cols-12 gap-x-6 gap-y-6 pt-6">
+          <FadeIn show={ready} delay={0.9} y={12} className="col-span-12 md:col-span-3">
+            <p className="label-mono">
+              {profile.location}
+              <br />
+              {profile.coordinates}
+            </p>
+          </FadeIn>
+          <FadeIn show={ready} delay={1} y={12} className="col-span-12 md:col-span-6 lg:col-span-5">
+            <p className="text-lg leading-relaxed text-fg/80 md:text-xl">{profile.intro}</p>
+          </FadeIn>
+          <FadeIn
+            show={ready}
+            delay={1.1}
+            y={12}
+            className="col-span-12 hidden items-end justify-end md:col-span-3 md:flex lg:col-span-4"
+          >
+            <a href="#about" className="label-mono group flex items-center gap-4 transition-colors hover:text-fg">
+              Scroll
+              <span className="relative block h-12 w-px overflow-hidden bg-line">
+                <span className="absolute inset-0 animate-[scroll-cue_1.8s_cubic-bezier(0.76,0,0.24,1)_infinite] bg-accent" />
+              </span>
+            </a>
+          </FadeIn>
+        </div>
+      </motion.div>
+    </section>
+  );
 }

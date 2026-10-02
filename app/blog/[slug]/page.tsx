@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import { FadeIn, RevealText } from '@/components/Reveal';
 
 export const revalidate = 3600;
 
@@ -26,25 +27,27 @@ export default async function BlogPostPage({ params }: PageProps) {
     }
 
     return (
-        <div className="bg-white min-h-screen py-20">
-            <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="mb-8">
-                    <Link href="/blog" className="inline-flex items-center text-indigo-600 hover:text-indigo-500 mb-6">
-                        <ArrowLeft className="h-4 w-4 mr-2" />
+        <div className="shell min-h-screen pb-24 pt-32 md:pt-40">
+            <article className="mx-auto max-w-3xl">
+                <div className="mb-10">
+                    <Link href="/blog" className="label-mono group mb-10 inline-flex items-center transition-colors hover:text-fg">
+                        <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-500 ease-expo group-hover:-translate-x-1" strokeWidth={1.5} />
                         Back to Blog
                     </Link>
 
-                    <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
-                        {post.title}
-                    </h1>
+                    <RevealText
+                        as="h1"
+                        text={post.title}
+                        className="mb-5 font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1] tracking-[-0.02em]"
+                    />
 
                     {post.subtitle && (
-                        <p className="text-xl text-gray-500 mb-6">
+                        <p className="mb-8 font-serif text-2xl italic text-muted">
                             {post.subtitle}
                         </p>
                     )}
 
-                    <div className="flex items-center space-x-4 mb-8">
+                    <FadeIn delay={0.2} className="mb-10 flex items-center space-x-4">
                         {post.author.profilePicture && (
                             <img
                                 src={post.author.profilePicture}
@@ -53,28 +56,28 @@ export default async function BlogPostPage({ params }: PageProps) {
                             />
                         )}
                         <div>
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="text-sm font-medium">
                                 {post.author.name}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="label-mono mt-1">
                                 {format(new Date(post.publishedAt), 'MMMM d, yyyy')}
                             </p>
                         </div>
-                    </div>
+                    </FadeIn>
 
                     {post.coverImage && (
-                        <div className="mb-10 rounded-xl overflow-hidden shadow-lg">
+                        <FadeIn delay={0.3} className="mb-12 overflow-hidden rounded-2xl border border-line">
                             <img
                                 src={post.coverImage.url}
                                 alt={post.title}
-                                className="w-full h-auto"
+                                className="h-auto w-full"
                             />
-                        </div>
+                        </FadeIn>
                     )}
                 </div>
 
                 <div
-                    className="prose prose-indigo prose-lg max-w-none"
+                    className="prose prose-theme prose-lg max-w-none prose-headings:font-serif prose-headings:font-normal"
                     dangerouslySetInnerHTML={{ __html: post.content.html }}
                 />
             </article>

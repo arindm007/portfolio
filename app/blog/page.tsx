@@ -1,7 +1,12 @@
+import type { Metadata } from 'next';
 import BlogCard from '@/components/BlogCard';
+import PageHeader from '@/components/PageHeader';
+import { FadeIn } from '@/components/Reveal';
 import { getPosts } from '@/lib/hashnode';
 
 export const revalidate = 3600; // Revalidate every hour
+
+export const metadata: Metadata = { title: 'Blog' };
 
 export default async function BlogPage() {
     let posts = [];
@@ -13,30 +18,25 @@ export default async function BlogPage() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen py-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
-                        Blog
-                    </h1>
-                    <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-                        Articles, tutorials, and insights.
-                    </p>
-                </div>
+        <div className="shell min-h-screen pb-24 pt-36 md:pt-48">
+            <PageHeader
+                label="Writing"
+                title="Blog"
+                description="Articles, tutorials and notes on agentic AI, RAG and building backends that hold up."
+            />
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {posts.length > 0 ? (
-                        posts.map((post: any) => (
-                            <BlogCard key={post.id} {...post} />
-                        ))
-                    ) : (
-                        <div className="col-span-3 text-center py-12">
-                            <p className="text-gray-500 text-lg">
-                                No posts found or error fetching posts.
-                            </p>
-                        </div>
-                    )}
-                </div>
+            <div className="grid gap-x-6 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+                {posts.length > 0 ? (
+                    posts.map((post: any, i: number) => (
+                        <FadeIn key={post.id} delay={(i % 3) * 0.08}>
+                            <BlogCard {...post} />
+                        </FadeIn>
+                    ))
+                ) : (
+                    <p className="col-span-full py-12 text-lg text-muted">
+                        No posts found or error fetching posts.
+                    </p>
+                )}
             </div>
         </div>
     );
