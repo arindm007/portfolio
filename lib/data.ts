@@ -9,8 +9,8 @@ export const profile = {
   coordinates: '12.97° N, 77.59° E',
   timeZone: 'Asia/Kolkata',
   email: 'arindamchakraborty6.10@gmail.com',
-  headline: 'I build AI agents that',
-  headlineAccent: 'ship to production.',
+  headline: 'AI agents',
+  headlineAccent: 'that ship.',
   intro:
     'Agentic AI systems, RAG pipelines and cloud-native backends, built alongside the enterprise teams who use them.',
   // Words wrapped in *asterisks* are set in accent italics.

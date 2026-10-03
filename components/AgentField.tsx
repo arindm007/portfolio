@@ -83,8 +83,7 @@ export default function AgentField({ className }: { className?: string }) {
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      // Capped: this canvas covers the whole viewport, and soft hairlines suit a dim backdrop.
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = rect.width;
       h = rect.height;
       canvas.width = Math.round(w * dpr);

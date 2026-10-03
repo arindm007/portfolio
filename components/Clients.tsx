@@ -40,7 +40,7 @@ export default function Clients() {
   return (
     <section className="overflow-hidden border-y border-line bg-bg/70 py-10 md:py-12" aria-label="Clients">
       <FadeIn className="shell mb-6 text-center md:mb-8" y={8}>
-        <p className="label-mono">Enterprise AI training delivered for</p>
+        <p className="meta">Enterprise AI training delivered for</p>
       </FadeIn>
       <motion.div className="flex w-max" style={{ x }}>
         {Array.from({ length: COPIES }, (_, copy) => (

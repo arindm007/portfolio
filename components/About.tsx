@@ -11,7 +11,7 @@ function Word({ word, progress, range }: { word: string; progress: MotionValue<n
   const emphasis = word.startsWith("*");
 
   return (
-    <motion.span style={{ opacity }} className={emphasis ? "text-comet" : undefined}>
+    <motion.span style={{ opacity }} className={emphasis ? "text-gradient" : undefined}>
       {word.replaceAll("*", "")}{" "}
     </motion.span>
   );
@@ -59,8 +59,8 @@ export default function About() {
     <section id="about" className="shell py-24 md:py-36">
       <div className="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
         <FadeIn className="lg:col-span-7 lg:row-span-2">
-          <div className="glass spotlight flex h-full flex-col justify-between gap-10 p-7 md:p-10">
-            <p className="eyebrow">{"// "}About</p>
+          <div className="tile spotlight flex h-full flex-col justify-between gap-10 p-7 md:p-10">
+            <p className="eyebrow">About</p>
             <Statement />
           </div>
         </FadeIn>
@@ -68,10 +68,10 @@ export default function About() {
         <dl className="grid grid-cols-2 gap-4 md:gap-5 lg:col-span-5 lg:row-span-2">
           {stats.map((stat, i) => (
             <FadeIn key={stat.label} delay={0.08 * i} className="h-full">
-              <div className="glass spotlight flex h-full flex-col justify-between gap-6 p-6 md:p-7">
-                <dd className="font-display text-5xl font-semibold leading-none tracking-[-0.04em] tabular-nums md:text-6xl">
+              <div className="tile spotlight flex h-full flex-col justify-between gap-6 p-6 md:p-7">
+                <dd className="text-gradient font-display text-5xl font-bold leading-[1.05] tracking-[-0.035em] tabular-nums md:text-6xl">
                   <CountUp value={stat.value} />
-                  <span className="text-comet">{stat.suffix}</span>
+                  {stat.suffix}
                 </dd>
                 <dt className="text-sm leading-snug text-muted">{stat.label}</dt>
               </div>
@@ -80,11 +80,11 @@ export default function About() {
         </dl>
 
         <FadeIn className="lg:col-span-4" delay={0.1}>
-          <div className="glass spotlight flex h-full flex-col justify-between gap-8 p-7 md:p-8">
-            <p className="label-mono">Based in</p>
+          <div className="tile spotlight flex h-full flex-col justify-between gap-8 p-7 md:p-8">
+            <p className="meta">Based in</p>
             <div>
               <p className="font-display text-3xl font-semibold tracking-[-0.03em]">{profile.location}</p>
-              <p className="label-mono mt-3 flex flex-wrap gap-x-3">
+              <p className="meta mt-3 flex flex-wrap gap-x-3">
                 <span>{profile.coordinates}</span>
                 <LocalTime className="text-accent" />
               </p>
@@ -93,7 +93,7 @@ export default function About() {
         </FadeIn>
 
         <FadeIn className="lg:col-span-8" delay={0.15}>
-          <div className="glass spotlight grid h-full gap-6 p-7 md:grid-cols-2 md:p-8">
+          <div className="tile spotlight grid h-full gap-6 p-7 md:grid-cols-2 md:p-8">
             {profile.bio.map((paragraph, i) => (
               <p key={i} className="leading-relaxed text-fg/75">
                 {paragraph}

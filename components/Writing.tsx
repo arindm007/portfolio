@@ -19,7 +19,7 @@ export default function Writing({ posts }: WritingProps) {
 
   return (
     <section id="writing" className="shell py-24 md:py-40">
-      <SectionHeading label="Writing" title="Notes from the build" />
+      <SectionHeading label="Writing" title="Notes from the build." />
 
       <div className="mt-14 border-t border-line md:mt-24">
         {posts.length > 0 ? (
@@ -33,7 +33,7 @@ export default function Writing({ posts }: WritingProps) {
                   aria-hidden
                   className="absolute inset-0 origin-bottom scale-y-0 bg-surface transition-transform duration-700 ease-expo group-hover:scale-y-100"
                 />
-                <span className="label-mono relative col-span-12 md:col-span-2">
+                <span className="meta relative col-span-12 md:col-span-2">
                   {format(new Date(post.publishedAt), 'MMM d, yyyy')}
                 </span>
                 <span className="relative col-span-11 font-display text-xl font-semibold leading-tight tracking-[-0.02em] transition-transform duration-700 ease-expo group-hover:translate-x-3 md:col-span-5 md:text-2xl">
@@ -65,7 +65,7 @@ export default function Writing({ posts }: WritingProps) {
         )}
       </div>
 
-      <FadeIn className="label-mono mt-8 flex gap-8">
+      <FadeIn className="meta mt-8 flex gap-8">
         <Link href="/blog" className="link-underline transition-colors hover:text-fg">
           All articles
         </Link>

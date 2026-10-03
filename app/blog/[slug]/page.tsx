@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <div className="shell min-h-screen pb-24 pt-32 md:pt-40">
             <article className="mx-auto max-w-3xl">
                 <div className="mb-10">
-                    <Link href="/blog" className="label-mono group mb-10 inline-flex items-center transition-colors hover:text-fg">
+                    <Link href="/blog" className="meta group mb-10 inline-flex items-center transition-colors hover:text-fg">
                         <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-500 ease-expo group-hover:-translate-x-1" strokeWidth={1.5} />
                         Back to Blog
                     </Link>
@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                             <p className="text-sm font-medium">
                                 {post.author.name}
                             </p>
-                            <p className="label-mono mt-1">
+                            <p className="meta mt-1">
                                 {format(new Date(post.publishedAt), 'MMMM d, yyyy')}
                             </p>
                         </div>

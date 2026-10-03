@@ -3,43 +3,48 @@
 
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
+/* Apple-style product page: black and grey surfaces, one system blue, colour reserved for gradient type. */
 :root {
-  --bg: #060a16;
-  --surface: #0c1224;
-  --glass: rgba(12, 18, 36, 0.78);
-  --fg: #e9edf8;
-  --muted: #939bb8;
-  --line: rgba(233, 237, 248, 0.12);
-  --accent: #ffc46b;
-  --accent-hi: #ffe2b0;
-  --ember: #ff7a45;
+  --bg: #000000;
+  --surface: #161617;
+  --tile: #1d1d1f;
+  --fg: #f5f5f7;
+  --muted: #86868b;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #2997ff;
+  --accent-hi: #dbe9ff;
+  --ember: #bf5af2;
+  --gradient: linear-gradient(100deg, #ffb340 0%, #ff6482 30%, #bf5af2 62%, #2997ff 100%);
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #f3f4f9;
-  --surface: #ffffff;
-  --glass: rgba(255, 255, 255, 0.82);
-  --fg: #0c1226;
-  --muted: #566083;
-  --line: rgba(12, 18, 38, 0.12);
-  --accent: #a85a00;
-  --accent-hi: #c2410c;
-  --ember: #b45309;
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --tile: #f5f5f7;
+  --fg: #1d1d1f;
+  --muted: #6e6e73;
+  --line: rgba(0, 0, 0, 0.1);
+  --accent: #0071e3;
+  --accent-hi: #0a84ff;
+  --ember: #8944ab;
+  --gradient: linear-gradient(100deg, #e07800 0%, #e0335a 30%, #8944ab 62%, #0071e3 100%);
   color-scheme: light;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-tile: var(--tile);
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-ember: var(--ember);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  /* SF Pro where the system has it (Apple devices), Inter everywhere else. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), "Segoe UI", sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -47,7 +52,7 @@
 @utility shell {
   margin-inline: auto;
   width: 100%;
-  max-width: 100rem;
+  max-width: 80rem;
   padding-inline: 1.25rem;
 
   @media (width >= 48rem) {
@@ -55,37 +60,37 @@
   }
 }
 
-@utility label-mono {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+/* Small supporting text: dates, places, captions. */
+@utility meta {
+  font-size: 0.8125rem;
   line-height: 1.4;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   color: var(--muted);
 }
 
+/* The short line above a section headline. */
 @utility eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.4;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--muted);
 }
 
-/* Gold comet gradient on text. Kept static: animating clipped backgrounds crashed Chrome renderers in testing. */
-@utility text-comet {
-  background-image: linear-gradient(100deg, var(--accent-hi), var(--accent) 45%, var(--ember));
+/* Multicolour gradient type, used sparingly. */
+@utility text-gradient {
+  background-image: var(--gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Tinted panel over the night sky. No backdrop blur: blurring over a canvas that redraws every frame is costly. */
-@utility glass {
-  background: var(--glass);
-  border: 1px solid var(--line);
-  border-radius: 1.5rem;
+/* Rounded content tile. No border and no backdrop blur, which is costly over a canvas that redraws every frame. */
+@utility tile {
+  background: var(--tile);
+  border: 1px solid transparent;
+  border-radius: 1.75rem;
 }
 
 /* Underline that draws in from the left and leaves to the right. */
@@ -129,7 +134,7 @@ body {
   color: var(--bg);
 }
 
-/* A soft glow that follows the pointer across any .spotlight panel (set by Cursor). */
+/* A soft glow that follows the pointer across any .spotlight panel (set by PointerGlow). */
 .spotlight {
   position: relative;
   isolation: isolate;

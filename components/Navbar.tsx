@@ -47,14 +47,14 @@ export default function Navbar() {
       <motion.header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-          scrolled && !isOpen ? "bg-bg/90" : "bg-transparent",
+          scrolled && !isOpen ? "bg-bg/85 border-b border-line" : "bg-transparent",
         )}
         initial={false}
         animate={{ y: hidden && !isOpen ? "-100%" : "0%" }}
         transition={{ duration: 0.5, ease: EASE }}
       >
-        <nav className="shell flex h-16 items-center justify-between">
-          <Link href="/" className="group flex items-center gap-2.5 text-sm font-medium" onClick={() => setIsOpen(false)}>
+        <nav className="shell flex h-12 items-center justify-between">
+          <Link href="/" className="group flex items-center gap-2 text-sm font-semibold tracking-[-0.01em]" onClick={() => setIsOpen(false)}>
             <span className="size-2 rounded-full bg-accent transition-transform duration-500 ease-expo group-hover:scale-150" />
             {profile.name}
           </Link>
@@ -64,7 +64,7 @@ export default function Navbar() {
               <SectionLink
                 key={section.id}
                 href={hrefFor(section.id)}
-                className="link-underline text-sm text-muted transition-colors hover:text-fg"
+                className="text-xs text-fg/80 transition-colors hover:text-fg"
               >
                 {section.label}
               </SectionLink>
@@ -72,8 +72,8 @@ export default function Navbar() {
             <Link
               href="/blog"
               className={cn(
-                "link-underline text-sm transition-colors hover:text-fg",
-                pathname.startsWith("/blog") ? "text-fg" : "text-muted",
+                "text-xs transition-colors hover:text-fg",
+                pathname.startsWith("/blog") ? "text-fg" : "text-fg/80",
               )}
             >
               Blog
@@ -84,7 +84,7 @@ export default function Navbar() {
             <ThemeToggle />
             <SectionLink
               href={hrefFor("contact")}
-              className="hidden h-9 items-center rounded-full bg-fg px-4 text-sm font-medium text-bg transition-colors hover:bg-accent md:flex"
+              className="hidden h-7 items-center rounded-full bg-accent px-3.5 text-xs font-medium text-white transition-[filter] hover:brightness-110 md:flex"
             >
               Let&apos;s talk
             </SectionLink>
@@ -141,13 +141,13 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                     >
                       {section.label}
-                      <span className="label-mono">0{i + 1}</span>
+                      <span className="meta">0{i + 1}</span>
                     </SectionLink>
                   </motion.div>
                 </div>
               ))}
             </div>
-            <div className="label-mono flex justify-between">
+            <div className="meta flex justify-between">
               <Link href="/blog" onClick={() => setIsOpen(false)}>
                 Blog
               </Link>

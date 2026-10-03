@@ -20,7 +20,7 @@ export default function Experience() {
     <section id="experience" className="shell py-24 md:py-36">
       <SectionHeading
         label="Experience"
-        title="Where I've built and shipped"
+        title="Where I've built and shipped."
         aside="Enterprise agentic AI, research labs at IISc and IIT Hyderabad, industrial MLOps and product engineering."
       />
 
@@ -50,7 +50,7 @@ export default function Experience() {
                 )}
               />
               <FadeIn delay={0.04 * i} y={16}>
-                <div className={cn("glass spotlight overflow-hidden transition-colors duration-500", isOpen && "border-accent/40")}>
+                <div className={cn("tile spotlight overflow-hidden transition-colors duration-500", isOpen && "border-accent/40")}>
                   <button
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
@@ -58,12 +58,12 @@ export default function Experience() {
                     className="flex w-full flex-col gap-3 p-6 text-left md:flex-row md:items-center md:gap-8 md:p-8"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="label-mono mb-2">{job.period}</p>
+                      <p className="meta mb-2">{job.period}</p>
                       <h3 className="font-display text-2xl font-semibold tracking-[-0.03em] md:text-3xl">{job.company}</h3>
                       <p className="mt-1 text-fg/70">{job.role}</p>
                     </div>
                     <div className="flex items-center justify-between gap-6 md:justify-end">
-                      <span className="label-mono">{job.location}</span>
+                      <span className="meta">{job.location}</span>
                       <span
                         className={cn(
                           "grid size-9 shrink-0 place-items-center rounded-full border border-line transition-transform duration-500 ease-expo",

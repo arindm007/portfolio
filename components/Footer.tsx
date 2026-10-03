@@ -5,7 +5,7 @@ import { profile } from '@/lib/data';
 export default function Footer() {
   return (
     <footer className="border-t border-line">
-      <div className="shell label-mono flex flex-col gap-4 py-8 md:flex-row md:items-center md:justify-between">
+      <div className="shell meta flex flex-col gap-4 py-8 md:flex-row md:items-center md:justify-between">
         <p>
           &copy; {new Date().getFullYear()} {profile.name}
         </p>

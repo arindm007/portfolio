@@ -27,7 +27,7 @@ export default function BlogCard({ title, brief, slug, publishedAt, coverImage }
                     </div>
                 )}
             </div>
-            <p className="label-mono mt-5">{format(new Date(publishedAt), 'MMMM d, yyyy')}</p>
+            <p className="meta mt-5">{format(new Date(publishedAt), 'MMMM d, yyyy')}</p>
             <h3 className="mt-2 font-display text-2xl font-semibold leading-tight tracking-[-0.02em] transition-colors duration-500 group-hover:text-accent">
                 {title}
             </h3>

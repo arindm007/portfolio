@@ -9,7 +9,7 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
     return (
         <section className="grid grid-cols-12 gap-x-6 gap-y-6 py-12 md:py-16">
             <FadeIn className="col-span-12 md:col-span-3" y={8}>
-                <h2 className="label-mono">{title}</h2>
+                <h2 className="meta">{title}</h2>
             </FadeIn>
             <div className="col-span-12 md:col-span-9">{children}</div>
             <Rule className="col-span-12 mt-12 md:mt-16" />
@@ -48,7 +48,7 @@ export default function About() {
                         <FadeIn key={job.company}>
                             <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                                 <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] md:text-3xl">{job.company}</h3>
-                                <p className="label-mono">{job.period} · {job.location}</p>
+                                <p className="meta">{job.period} · {job.location}</p>
                             </div>
                             <p className="mt-1 text-fg/80">{job.role}</p>
                             <ul className="mt-4 max-w-3xl space-y-2">
@@ -68,7 +68,7 @@ export default function About() {
                 <FadeIn>
                     <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                         <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] md:text-3xl">{education.school}</h3>
-                        <p className="label-mono">{education.location}</p>
+                        <p className="meta">{education.location}</p>
                     </div>
                     <p className="mt-1 text-fg/80">{education.degree} · {education.detail}</p>
                     <p className="mt-4 max-w-3xl leading-relaxed text-fg/75">

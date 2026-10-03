@@ -37,10 +37,10 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="Toggle colour theme"
-      className="grid size-9 place-items-center rounded-full border border-line text-fg transition-colors hover:border-fg"
+      className="grid size-7 place-items-center rounded-full text-fg/80 transition-colors hover:text-fg"
     >
-      <Sun className="size-4 light:hidden" strokeWidth={1.5} />
-      <Moon className="hidden size-4 light:block" strokeWidth={1.5} />
+      <Sun className="size-3.5 light:hidden" strokeWidth={1.5} />
+      <Moon className="hidden size-3.5 light:block" strokeWidth={1.5} />
     </button>
   );
 }

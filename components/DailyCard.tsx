@@ -14,7 +14,7 @@ export default function DailyCard({ title, brief, slug, publishedAt }: DailyCard
             href={`/blog/${slug}`}
             className="group grid grid-cols-12 items-baseline gap-x-6 gap-y-2 border-b border-line py-6"
         >
-            <p className="label-mono col-span-12 md:col-span-3">
+            <p className="meta col-span-12 md:col-span-3">
                 {format(new Date(publishedAt), 'MMM d, yyyy')}
             </p>
             <div className="col-span-12 transition-transform duration-700 ease-expo group-hover:translate-x-3 md:col-span-9">

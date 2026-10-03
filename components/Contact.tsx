@@ -18,15 +18,15 @@ export default function Contact() {
 
   return (
     <section id="contact" className="shell py-24 md:py-40">
-      <div className="glass spotlight flex flex-col items-center gap-8 px-6 py-16 text-center md:px-12 md:py-24">
+      <div className="tile spotlight flex flex-col items-center gap-8 px-6 py-16 text-center md:px-12 md:py-24">
         <FadeIn y={8}>
-          <p className="eyebrow">{"// "}Contact</p>
+          <p className="eyebrow">Contact</p>
         </FadeIn>
 
         <BlurText
           as="h2"
-          segments={[{ text: "Let's build agents that" }, { text: "ship.", className: "text-comet pb-[0.08em]" }]}
-          className="max-w-[12ch] font-display text-[clamp(2.75rem,8vw,7rem)] font-bold leading-[0.98] tracking-[-0.045em] text-balance"
+          segments={[{ text: "Let's build agents that" }, { text: "ship.", className: "text-gradient pb-[0.08em]" }]}
+          className="max-w-[12ch] font-display text-[clamp(2.75rem,7vw,6rem)] font-bold leading-[1.02] tracking-[-0.035em] text-balance"
         />
 
         <FadeIn delay={0.3}>
@@ -39,7 +39,7 @@ export default function Contact() {
           <Magnetic strength={0.25}>
             <a
               href={`mailto:${profile.email}`}
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-fg px-6 text-sm font-medium text-bg transition-colors duration-300 hover:bg-accent"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[1.0625rem] font-medium text-white transition-[filter] duration-300 hover:brightness-110"
             >
               Email me
               <ArrowUpRight className="size-4 transition-transform duration-500 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.75} />
@@ -49,7 +49,7 @@ export default function Contact() {
             type="button"
             onClick={copy}
             aria-live="polite"
-            className="glass inline-flex h-12 items-center gap-2 !rounded-full px-6 text-sm font-medium transition-colors duration-300 hover:border-accent hover:text-accent"
+            className="inline-flex h-12 items-center gap-2 px-4 text-[1.0625rem] font-medium text-accent transition-opacity hover:opacity-80"
           >
             {copied ? <Check className="size-4" strokeWidth={1.75} /> : <Copy className="size-4" strokeWidth={1.75} />}
             {copied ? "Copied" : "Copy email"}

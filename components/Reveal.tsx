@@ -148,7 +148,7 @@ export function Magnetic({ children, className, strength = 0.35 }: MagneticProps
 }
 
 interface BlurTextProps {
-  /** Runs of text; a run with a className (e.g. "text-comet") styles every word in it. */
+  /** Runs of text; a run with a className (e.g. "text-gradient") styles every word in it. */
   segments: { text: string; className?: string }[];
   as?: "h1" | "h2" | "h3" | "p" | "span" | "div";
   className?: string;
@@ -200,20 +200,18 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ label, title, aside }: SectionHeadingProps) {
   return (
-    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-      <div className="flex flex-col gap-4">
-        <FadeIn y={8}>
-          <p className="eyebrow">{"// "}{label}</p>
-        </FadeIn>
-        <BlurText
-          as="h2"
-          segments={[{ text: title }]}
-          className="max-w-[18ch] font-display text-[clamp(2.25rem,5vw,4.25rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance"
-        />
-      </div>
+    <div className="flex max-w-4xl flex-col gap-4">
+      <FadeIn y={8}>
+        <p className="eyebrow">{label}</p>
+      </FadeIn>
+      <BlurText
+        as="h2"
+        segments={[{ text: title }]}
+        className="font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.02] tracking-[-0.035em] text-balance"
+      />
       {aside && (
-        <FadeIn delay={0.2} className="max-w-sm">
-          <p className="leading-relaxed text-muted">{aside}</p>
+        <FadeIn delay={0.2}>
+          <p className="mt-2 max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] font-medium leading-snug text-muted">{aside}</p>
         </FadeIn>
       )}
     </div>

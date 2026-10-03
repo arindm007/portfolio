@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Intro from "@/components/Intro";
 import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
+import PointerGlow from "@/components/PointerGlow";
 import Backdrop from "@/components/Backdrop";
 
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage" });
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +41,7 @@ export default function RootLayout({
       lang="en"
       data-theme="dark"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable}`}
+      className={`${inter.variable} ${geistMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
@@ -50,7 +49,7 @@ export default function RootLayout({
       <body>
         <Intro>
           <SmoothScroll />
-          <Cursor />
+          <PointerGlow />
           <Backdrop />
           <div className="relative z-10 flex min-h-screen flex-col">
             <Navbar />
