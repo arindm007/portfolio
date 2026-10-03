@@ -9,8 +9,9 @@ export const profile = {
   coordinates: '12.97° N, 77.59° E',
   timeZone: 'Asia/Kolkata',
   email: 'arindamchakraborty6.10@gmail.com',
-  headline: 'AI agents',
-  headlineAccent: 'that ship.',
+  tagline: ['AI agents, RAG pipelines and the backends beneath them.', 'Built with the teams who use them.'],
+  focus: ['Agentic AI', 'RAG', 'Forward deployed', 'AI training', 'Cloud backends'],
+  portrait: { src: '/arindam.jpg', alt: 'Arindam Chakraborty on a rooftop in Bengaluru at night' },
   intro:
     'Agentic AI systems, RAG pipelines and cloud-native backends, built alongside the enterprise teams who use them.',
   // Words wrapped in *asterisks* are set in accent italics.

@@ -148,7 +148,7 @@ export function Magnetic({ children, className, strength = 0.35 }: MagneticProps
 }
 
 interface BlurTextProps {
-  /** Runs of text; a run with a className (e.g. "text-gradient") styles every word in it. */
+  /** Runs of text; a run with a className (e.g. "text-ink") styles every word in it. */
   segments: { text: string; className?: string }[];
   as?: "h1" | "h2" | "h3" | "p" | "span" | "div";
   className?: string;
@@ -202,18 +202,33 @@ export function SectionHeading({ label, title, aside }: SectionHeadingProps) {
   return (
     <div className="flex max-w-4xl flex-col gap-4">
       <FadeIn y={8}>
-        <p className="eyebrow">{label}</p>
+        <p className="eyebrow">({label})</p>
       </FadeIn>
       <BlurText
         as="h2"
         segments={[{ text: title }]}
-        className="font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.02] tracking-[-0.035em] text-balance"
+        className="font-display text-[clamp(2.75rem,6.5vw,5.75rem)] font-medium leading-[0.98] tracking-[-0.03em] text-balance"
       />
       {aside && (
         <FadeIn delay={0.2}>
-          <p className="mt-2 max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] font-medium leading-snug text-muted">{aside}</p>
+          <p className="mt-2 max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] leading-snug text-muted">{aside}</p>
         </FadeIn>
       )}
     </div>
+  );
+}
+
+/**
+ * Hover label that rolls: the text slides up and out while a copy rises in from below.
+ * The hover target must carry the `group` class.
+ */
+export function RollText({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="relative inline-flex overflow-hidden">
+      <span className="roll-copy block">{children}</span>
+      <span aria-hidden className="roll-copy absolute left-0 top-full block">
+        {children}
+      </span>
+    </span>
   );
 }

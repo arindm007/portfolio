@@ -48,7 +48,7 @@ export default function Clients() {
             {clients.map((client) => (
               <li
                 key={client}
-                className="flex items-center font-display text-[clamp(1.75rem,4.2vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] text-fg/75"
+                className="flex items-center font-display text-[clamp(1.75rem,4.2vw,3.5rem)] font-medium leading-none tracking-[-0.03em] text-fg/75"
               >
                 <span className="whitespace-nowrap px-6 md:px-10">{client}</span>
                 <svg viewBox="0 0 24 24" className="size-[0.32em] animate-[viz-spin_9s_linear_infinite] text-accent" aria-hidden>

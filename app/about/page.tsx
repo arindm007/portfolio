@@ -47,7 +47,7 @@ export default function About() {
                     {experience.map((job) => (
                         <FadeIn key={job.company}>
                             <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
-                                <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] md:text-3xl">{job.company}</h3>
+                                <h3 className="font-display text-2xl font-medium leading-tight tracking-[-0.03em] md:text-3xl">{job.company}</h3>
                                 <p className="meta">{job.period} · {job.location}</p>
                             </div>
                             <p className="mt-1 text-fg/80">{job.role}</p>
@@ -67,7 +67,7 @@ export default function About() {
             <Block title="Education">
                 <FadeIn>
                     <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
-                        <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] md:text-3xl">{education.school}</h3>
+                        <h3 className="font-display text-2xl font-medium leading-tight tracking-[-0.03em] md:text-3xl">{education.school}</h3>
                         <p className="meta">{education.location}</p>
                     </div>
                     <p className="mt-1 text-fg/80">{education.degree} · {education.detail}</p>
@@ -81,7 +81,7 @@ export default function About() {
                 <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2">
                     {skills.map((group) => (
                         <FadeIn key={group.title}>
-                            <h3 className="font-display text-xl font-semibold tracking-[-0.02em]">{group.title}</h3>
+                            <h3 className="font-display text-xl font-medium tracking-[-0.02em]">{group.title}</h3>
                             <p className="mt-2 leading-relaxed text-fg/75">{group.items.join(', ')}</p>
                         </FadeIn>
                     ))}
@@ -91,7 +91,7 @@ export default function About() {
             <Block title="Activities">
                 {activities.map((activity) => (
                     <FadeIn key={activity.title}>
-                        <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em]">{activity.title}</h3>
+                        <h3 className="font-display text-2xl font-medium leading-tight tracking-[-0.03em]">{activity.title}</h3>
                         <p className="mt-1 text-fg/80">{activity.role}</p>
                         <p className="mt-3 max-w-3xl leading-relaxed text-fg/75">{activity.detail}</p>
                     </FadeIn>

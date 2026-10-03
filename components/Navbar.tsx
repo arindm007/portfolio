@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { RollText } from "@/components/Reveal";
 import ThemeToggle from "@/components/ThemeToggle";
 import { profile } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -54,8 +55,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: EASE }}
       >
         <nav className="shell flex h-12 items-center justify-between">
-          <Link href="/" className="group flex items-center gap-2 text-sm font-semibold tracking-[-0.01em]" onClick={() => setIsOpen(false)}>
-            <span className="size-2 rounded-full bg-accent transition-transform duration-500 ease-expo group-hover:scale-150" />
+          <Link href="/" className="group flex items-center gap-2 text-sm font-medium uppercase tracking-[0.02em]" onClick={() => setIsOpen(false)}>
             {profile.name}
           </Link>
 
@@ -64,19 +64,19 @@ export default function Navbar() {
               <SectionLink
                 key={section.id}
                 href={hrefFor(section.id)}
-                className="text-xs text-fg/80 transition-colors hover:text-fg"
+                className="group text-xs uppercase tracking-[0.04em] text-fg/80 transition-colors hover:text-fg"
               >
-                {section.label}
+                <RollText>{section.label}</RollText>
               </SectionLink>
             ))}
             <Link
               href="/blog"
               className={cn(
-                "text-xs transition-colors hover:text-fg",
+                "group text-xs uppercase tracking-[0.04em] transition-colors hover:text-fg",
                 pathname.startsWith("/blog") ? "text-fg" : "text-fg/80",
               )}
             >
-              Blog
+              <RollText>Blog</RollText>
             </Link>
           </div>
 
@@ -84,9 +84,9 @@ export default function Navbar() {
             <ThemeToggle />
             <SectionLink
               href={hrefFor("contact")}
-              className="hidden h-7 items-center rounded-full bg-accent px-3.5 text-xs font-medium text-white transition-[filter] hover:brightness-110 md:flex"
+              className="group hidden h-8 items-center bg-fg px-4 text-xs font-medium uppercase tracking-[0.04em] text-bg transition-opacity hover:opacity-85 md:flex"
             >
-              Let&apos;s talk
+              <RollText>Let&apos;s talk</RollText>
             </SectionLink>
             <button
               type="button"
@@ -137,7 +137,7 @@ export default function Navbar() {
                   >
                     <SectionLink
                       href={hrefFor(section.id)}
-                      className="flex items-baseline justify-between py-3 font-display text-4xl font-semibold tracking-[-0.03em]"
+                      className="flex items-baseline justify-between py-3 font-display text-4xl font-medium tracking-[-0.03em]"
                       onClick={() => setIsOpen(false)}
                     >
                       {section.label}

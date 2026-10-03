@@ -53,7 +53,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
     <div className="lg:sticky lg:mt-[14vh] lg:first:mt-0" style={stacked ? { top } : undefined}>
       <motion.article
         ref={ref}
-        className="spotlight relative grid w-full origin-top overflow-hidden rounded-[1.75rem] border border-transparent bg-tile lg:min-h-[39.5rem] lg:grid-cols-12"
+        className="spotlight relative grid w-full origin-top overflow-hidden border border-line bg-bg lg:min-h-[39.5rem] lg:grid-cols-12"
         style={stacked ? { scale } : undefined}
       >
         <div className="flex flex-col justify-between gap-10 p-6 md:p-10 lg:col-span-7">
@@ -65,7 +65,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
           </div>
 
           <div>
-            <h3 className="font-display text-[clamp(2.25rem,4.4vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.03em]">
+            <h3 className="font-display text-[clamp(2.25rem,4.4vw,3.75rem)] font-medium leading-[1] tracking-[-0.03em]">
               {project.title}
             </h3>
             <p className="mt-3 text-lg text-muted md:text-xl">{project.subtitle}</p>
@@ -77,13 +77,13 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
               {project.metrics.map((metric) => (
                 <div key={metric.label} className="flex max-w-[15rem] flex-col-reverse">
                   <dt className="mt-1 text-xs leading-snug text-muted">{metric.label}</dt>
-                  <dd className="text-gradient font-display text-4xl font-semibold leading-none tracking-[-0.03em]">{metric.value}</dd>
+                  <dd className="text-ink font-display text-4xl font-medium leading-none tracking-[-0.03em]">{metric.value}</dd>
                 </div>
               ))}
             </dl>
             <ul className="mt-7 flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <li key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-fg/80">
+                <li key={tag} className="border border-line px-3 py-1 text-xs text-fg/80">
                   {tag}
                 </li>
               ))}
@@ -91,7 +91,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center border-t border-line bg-bg/50 p-6 lg:col-span-5 lg:border-l lg:border-t-0">
+        <div className="flex items-center justify-center border-t border-line bg-surface p-6 lg:col-span-5 lg:border-l lg:border-t-0">
           <ProjectVisual kind={project.visual} className="aspect-square w-full max-w-[26rem] lg:max-h-full" />
         </div>
       </motion.article>
@@ -108,7 +108,7 @@ export default function Projects() {
     <section id="work" className="shell py-24 md:py-40">
       <SectionHeading
         label="Selected work"
-        title="Things I've built."
+        title="Selected projects"
         aside="Recent projects across agent platforms, multimodal inference and fine-tuned language models."
       />
 

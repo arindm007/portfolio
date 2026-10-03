@@ -14,7 +14,7 @@ interface BlogCardProps {
 export default function BlogCard({ title, brief, slug, publishedAt, coverImage }: BlogCardProps) {
     return (
         <Link href={`/blog/${slug}`} className="group flex flex-col">
-            <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-500 group-hover:border-accent/50">
+            <div className="aspect-[16/10] overflow-hidden border border-line bg-surface transition-colors duration-500 group-hover:border-accent/50">
                 {coverImage ? (
                     <img
                         className="h-full w-full object-cover transition-transform duration-1000 ease-expo group-hover:scale-105"
@@ -22,13 +22,13 @@ export default function BlogCard({ title, brief, slug, publishedAt, coverImage }
                         alt=""
                     />
                 ) : (
-                    <div className="flex h-full w-full items-center justify-center font-display text-8xl font-bold text-muted transition-transform duration-1000 ease-expo group-hover:scale-110">
+                    <div className="flex h-full w-full items-center justify-center font-display text-8xl font-medium text-muted transition-transform duration-1000 ease-expo group-hover:scale-110">
                         {title.charAt(0)}
                     </div>
                 )}
             </div>
             <p className="meta mt-5">{format(new Date(publishedAt), 'MMMM d, yyyy')}</p>
-            <h3 className="mt-2 font-display text-2xl font-semibold leading-tight tracking-[-0.02em] transition-colors duration-500 group-hover:text-accent">
+            <h3 className="mt-2 font-display text-2xl font-medium leading-tight tracking-[-0.02em] transition-colors duration-500 group-hover:text-accent">
                 {title}
             </h3>
             <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">{brief}</p>

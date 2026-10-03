@@ -11,7 +11,7 @@ function Word({ word, progress, range }: { word: string; progress: MotionValue<n
   const emphasis = word.startsWith("*");
 
   return (
-    <motion.span style={{ opacity }} className={emphasis ? "text-gradient" : undefined}>
+    <motion.span style={{ opacity }} className={emphasis ? "text-ink" : undefined}>
       {word.replaceAll("*", "")}{" "}
     </motion.span>
   );
@@ -26,7 +26,7 @@ function Statement() {
   return (
     <p
       ref={ref}
-      className="font-display text-[clamp(1.5rem,2.6vw,2.4rem)] font-medium leading-[1.2] tracking-[-0.02em]"
+      className="font-display text-[clamp(1.5rem,2.6vw,2.4rem)] leading-[1.2] tracking-[-0.02em]"
     >
       {words.map((word, i) => (
         <Word key={i} word={word} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
@@ -60,7 +60,7 @@ export default function About() {
       <div className="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
         <FadeIn className="lg:col-span-7 lg:row-span-2">
           <div className="tile spotlight flex h-full flex-col justify-between gap-10 p-7 md:p-10">
-            <p className="eyebrow">About</p>
+            <p className="eyebrow">(About)</p>
             <Statement />
           </div>
         </FadeIn>
@@ -69,7 +69,7 @@ export default function About() {
           {stats.map((stat, i) => (
             <FadeIn key={stat.label} delay={0.08 * i} className="h-full">
               <div className="tile spotlight flex h-full flex-col justify-between gap-6 p-6 md:p-7">
-                <dd className="text-gradient font-display text-5xl font-bold leading-[1.05] tracking-[-0.035em] tabular-nums md:text-6xl">
+                <dd className="font-display text-5xl font-medium leading-[1.05] tracking-[-0.035em] tabular-nums md:text-6xl">
                   <CountUp value={stat.value} />
                   {stat.suffix}
                 </dd>
@@ -83,10 +83,10 @@ export default function About() {
           <div className="tile spotlight flex h-full flex-col justify-between gap-8 p-7 md:p-8">
             <p className="meta">Based in</p>
             <div>
-              <p className="font-display text-3xl font-semibold tracking-[-0.03em]">{profile.location}</p>
+              <p className="font-display text-3xl font-medium tracking-[-0.03em]">{profile.location}</p>
               <p className="meta mt-3 flex flex-wrap gap-x-3">
                 <span>{profile.coordinates}</span>
-                <LocalTime className="text-accent" />
+                <LocalTime className="text-fg" />
               </p>
             </div>
           </div>

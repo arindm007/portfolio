@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import { Funnel_Display, Funnel_Sans, Geist_Mono } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -9,7 +9,8 @@ import SmoothScroll from "@/components/SmoothScroll";
 import PointerGlow from "@/components/PointerGlow";
 import Backdrop from "@/components/Backdrop";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const funnelDisplay = Funnel_Display({ subsets: ["latin"], variable: "--font-funnel-display" });
+const funnelSans = Funnel_Sans({ subsets: ["latin"], variable: "--font-funnel-sans" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
@@ -39,9 +40,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      data-theme="light"
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable}`}
+      className={`${funnelDisplay.variable} ${funnelSans.variable} ${geistMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

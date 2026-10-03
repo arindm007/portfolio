@@ -19,7 +19,7 @@ export default function Writing({ posts }: WritingProps) {
 
   return (
     <section id="writing" className="shell py-24 md:py-40">
-      <SectionHeading label="Writing" title="Notes from the build." />
+      <SectionHeading label="Writing" title="Notes from the build" />
 
       <div className="mt-14 border-t border-line md:mt-24">
         {posts.length > 0 ? (
@@ -36,7 +36,7 @@ export default function Writing({ posts }: WritingProps) {
                 <span className="meta relative col-span-12 md:col-span-2">
                   {format(new Date(post.publishedAt), 'MMM d, yyyy')}
                 </span>
-                <span className="relative col-span-11 font-display text-xl font-semibold leading-tight tracking-[-0.02em] transition-transform duration-700 ease-expo group-hover:translate-x-3 md:col-span-5 md:text-2xl">
+                <span className="relative col-span-11 font-display text-xl font-medium leading-tight tracking-[-0.02em] transition-transform duration-700 ease-expo group-hover:translate-x-3 md:col-span-5 md:text-2xl">
                   {post.title}
                 </span>
                 <span className="relative col-span-11 line-clamp-2 text-sm leading-relaxed text-muted md:col-span-4">

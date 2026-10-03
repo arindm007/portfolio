@@ -5,12 +5,12 @@ import { motion, useScroll, useTransform } from "motion/react";
 import AgentField from "@/components/AgentField";
 import { useIntroReady } from "@/components/Intro";
 
-/** The night sky behind every page: full strength over the home hero, dimmer under content. */
+/** The star-and-signal backdrop behind every page: strongest over the home hero, fainter under content. */
 export default function Backdrop() {
   const ready = useIntroReady();
   const home = usePathname() === "/";
   const { scrollY } = useScroll();
-  const dim = useTransform(scrollY, [0, 700], [1, 0.4]);
+  const dim = useTransform(scrollY, [0, 700], [0.55, 0.3]);
 
   return (
     <motion.div
@@ -20,7 +20,7 @@ export default function Backdrop() {
       animate={{ opacity: ready ? 1 : 0 }}
       transition={{ duration: 2, delay: 0.2 }}
     >
-      <motion.div className="h-full w-full" style={{ opacity: home ? dim : 0.4 }}>
+      <motion.div className="h-full w-full" style={{ opacity: home ? dim : 0.3 }}>
         <AgentField className="h-full w-full" />
       </motion.div>
     </motion.div>

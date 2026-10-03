@@ -3,32 +3,30 @@
 
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-/* Apple-style product page: black and grey surfaces, one system blue, colour reserved for gradient type. */
+/* Studio monochrome: warm paper, near-black ink and greys. No hue anywhere, so the portrait carries the colour. */
 :root {
-  --bg: #000000;
-  --surface: #161617;
-  --tile: #1d1d1f;
-  --fg: #f5f5f7;
-  --muted: #86868b;
-  --line: rgba(255, 255, 255, 0.1);
-  --accent: #2997ff;
-  --accent-hi: #dbe9ff;
-  --ember: #bf5af2;
-  --gradient: linear-gradient(100deg, #ffb340 0%, #ff6482 30%, #bf5af2 62%, #2997ff 100%);
+  --bg: #0d0d0b;
+  --surface: #161614;
+  --tile: #0d0d0b;
+  --fg: #efeeeb;
+  --muted: #8f8b83;
+  --line: rgba(239, 238, 235, 0.16);
+  --accent: #efeeeb;
+  --accent-hi: #efeeeb;
+  --ember: #8f8b83;
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #f5f5f7;
-  --tile: #f5f5f7;
-  --fg: #1d1d1f;
-  --muted: #6e6e73;
-  --line: rgba(0, 0, 0, 0.1);
-  --accent: #0071e3;
-  --accent-hi: #0a84ff;
-  --ember: #8944ab;
-  --gradient: linear-gradient(100deg, #e07800 0%, #e0335a 30%, #8944ab 62%, #0071e3 100%);
+  --bg: #efeeeb;
+  --surface: #e6e4df;
+  --tile: #efeeeb;
+  --fg: #0a0a0a;
+  --muted: #6b6862;
+  --line: rgba(10, 10, 10, 0.18);
+  --accent: #0a0a0a;
+  --accent-hi: #0a0a0a;
+  --ember: #6b6862;
   color-scheme: light;
 }
 
@@ -41,9 +39,8 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-ember: var(--ember);
-  /* SF Pro where the system has it (Apple devices), Inter everywhere else. */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), "Segoe UI", sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), "Segoe UI", sans-serif;
+  --font-sans: var(--font-funnel-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-funnel-display), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
@@ -62,35 +59,43 @@
 
 /* Small supporting text: dates, places, captions. */
 @utility meta {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   line-height: 1.4;
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
-/* The short line above a section headline. */
+/* Section label, written in parentheses: (ABOUT). */
 @utility eyebrow {
-  font-size: 1.0625rem;
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
-/* Multicolour gradient type, used sparingly. */
-@utility text-gradient {
-  background-image: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Full-strength ink for words that should stand out from grey text. */
+@utility text-ink {
+  color: var(--fg);
 }
 
-/* Rounded content tile. No border and no backdrop blur, which is costly over a canvas that redraws every frame. */
+/* Square outlined panel on the paper, opaque so the background lines stay behind it. */
 @utility tile {
   background: var(--tile);
-  border: 1px solid transparent;
-  border-radius: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+/* Hover roll: the label slides up and an identical copy slides in beneath it. Used with RollText. */
+.roll-copy {
+  transition: transform 0.55s var(--ease-expo);
+}
+
+.group:hover .roll-copy {
+  transform: translateY(-100%);
 }
 
 /* Underline that draws in from the left and leaves to the right. */
@@ -317,7 +322,7 @@ section[id] {
 }
 
 .prose-theme img {
-  border-radius: 0.75rem;
+  border-radius: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

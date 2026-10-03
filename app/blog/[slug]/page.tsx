@@ -38,7 +38,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <RevealText
                         as="h1"
                         text={post.title}
-                        className="mb-5 font-display text-[clamp(2.25rem,5vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.04em]"
+                        className="mb-5 font-display text-[clamp(2.25rem,5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.04em]"
                     />
 
                     {post.subtitle && (
@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     </FadeIn>
 
                     {post.coverImage && (
-                        <FadeIn delay={0.3} className="mb-12 overflow-hidden rounded-2xl border border-line">
+                        <FadeIn delay={0.3} className="mb-12 overflow-hidden border border-line">
                             <img
                                 src={post.coverImage.url}
                                 alt={post.title}
@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </div>
 
                 <div
-                    className="prose prose-theme prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:tracking-tight"
+                    className="prose prose-theme prose-lg max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:tracking-tight"
                     dangerouslySetInnerHTML={{ __html: post.content.html }}
                 />
             </article>
