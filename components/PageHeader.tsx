@@ -10,13 +10,13 @@ export default function PageHeader({ label, title, description }: PageHeaderProp
   return (
     <header className="pb-12 md:pb-20">
       <FadeIn y={8}>
-        <p className="label-mono mb-6">{label}</p>
+        <p className="eyebrow mb-6">{"// "}{label}</p>
       </FadeIn>
       <RevealText
         as="h1"
         text={title}
         delay={0.1}
-        className="font-serif text-[clamp(3.5rem,10vw,9rem)] leading-[0.9] tracking-[-0.03em]"
+        className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] tracking-[-0.045em]"
       />
       {description && (
         <FadeIn delay={0.3}>

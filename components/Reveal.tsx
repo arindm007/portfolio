@@ -51,9 +51,9 @@ export function RevealText({
                     className="-mx-[0.06em] -mb-[0.18em] -mt-[0.08em] inline-block overflow-hidden px-[0.06em] pb-[0.18em] pt-[0.08em] align-bottom"
                   >
                     <motion.span
-                      className="inline-block will-change-transform"
-                      initial={{ y: "115%" }}
-                      animate={{ y: visible ? "0%" : "115%" }}
+                      className="inline-block"
+                      initial={{ y: "130%" }}
+                      animate={{ y: visible ? "0%" : "130%" }}
                       transition={{ duration: 1, ease: EASE, delay: delay + i * step }}
                     >
                       {piece}
@@ -147,22 +147,75 @@ export function Magnetic({ children, className, strength = 0.35 }: MagneticProps
   );
 }
 
-export function SectionHeading({ index, label, title }: { index: string; label: string; title: string }) {
+interface BlurTextProps {
+  /** Runs of text; a run with a className (e.g. "text-comet") styles every word in it. */
+  segments: { text: string; className?: string }[];
+  as?: "h1" | "h2" | "h3" | "p" | "span" | "div";
+  className?: string;
+  delay?: number;
+  stagger?: number;
+  show?: boolean;
+}
+
+/** Words that drift up and come into focus one after another. */
+export function BlurText({ segments, as = "span", className, delay = 0, stagger = 0.06, show }: BlurTextProps) {
+  const Tag = as as "div";
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
+  const visible = show ?? inView;
+  const words = segments.flatMap((segment) =>
+    segment.text.split(" ").map((word) => ({ word, className: segment.className })),
+  );
+
   return (
-    <div>
-      <Rule />
-      <div className="grid grid-cols-12 gap-x-6 gap-y-6 pt-6">
-        <FadeIn className="col-span-12 md:col-span-3" y={8}>
-          <p className="label-mono">
-            <span className="text-accent">({index})</span> {label}
-          </p>
+    <Tag ref={ref} className={className} aria-label={segments.map((segment) => segment.text).join(" ")}>
+      {words.map(({ word, className: wordClass }, i) => (
+        <Fragment key={i}>
+          <motion.span
+            aria-hidden
+            className={cn("inline-block", wordClass)}
+            initial={{ opacity: 0, y: "0.35em", filter: "blur(12px)" }}
+            animate={
+              visible
+                ? // Drop the filter once in focus, so finished words are not left as GPU layers.
+                  { opacity: 1, y: "0em", filter: "blur(0px)", transitionEnd: { filter: "none", transform: "none" } }
+                : { opacity: 0, y: "0.35em", filter: "blur(12px)" }
+            }
+            transition={{ duration: 0.9, ease: EASE, delay: delay + i * stagger }}
+          >
+            {word}
+          </motion.span>
+          {i < words.length - 1 && " "}
+        </Fragment>
+      ))}
+    </Tag>
+  );
+}
+
+interface SectionHeadingProps {
+  label: string;
+  title: string;
+  aside?: string;
+}
+
+export function SectionHeading({ label, title, aside }: SectionHeadingProps) {
+  return (
+    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div className="flex flex-col gap-4">
+        <FadeIn y={8}>
+          <p className="eyebrow">{"// "}{label}</p>
         </FadeIn>
-        <RevealText
+        <BlurText
           as="h2"
-          text={title}
-          className="col-span-12 font-serif text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95] tracking-[-0.02em] md:col-span-9"
+          segments={[{ text: title }]}
+          className="max-w-[18ch] font-display text-[clamp(2.25rem,5vw,4.25rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance"
         />
       </div>
+      {aside && (
+        <FadeIn delay={0.2} className="max-w-sm">
+          <p className="leading-relaxed text-muted">{aside}</p>
+        </FadeIn>
+      )}
     </div>
   );
 }

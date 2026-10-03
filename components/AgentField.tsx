@@ -15,6 +15,15 @@ interface Node {
   label?: string;
 }
 
+/** A shooting star crossing the sky. Position is the head; the tail trails behind it. */
+interface Comet {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+}
+
 /** A signal travelling from node `a` to node `b`, like an agent handing off a step. */
 interface Pulse {
   a: number;
@@ -31,7 +40,8 @@ function toRgb(value: string, fallback: string) {
 }
 
 /**
- * Hero backdrop: a drifting graph of nodes with signals hopping between them.
+ * Site backdrop: a drifting graph of nodes with signals hopping between them,
+ * stars twinkling underneath and the odd comet streaking across.
  * Reacts to the pointer; clicking fires a burst from the nearest node.
  */
 export default function AgentField({ className }: { className?: string }) {
@@ -48,24 +58,33 @@ export default function AgentField({ className }: { className?: string }) {
     let h = 0;
     let nodes: Node[] = [];
     let pulses: Pulse[] = [];
+    let comets: Comet[] = [];
+    let stars: { x: number; y: number; r: number; phase: number }[] = [];
+    let untilComet = 1200;
+    let clock = 0;
     let raf = 0;
     let running = false;
     let last = 0;
     let sinceSpawn = 0;
     let fg = "236, 234, 227";
-    let accent = "255, 90, 43";
+    let accent = "255, 196, 107";
+    let accentHi = "255, 226, 176";
+    let ember = "255, 122, 69";
     let mono = "monospace";
 
     const readTheme = () => {
       const style = getComputedStyle(document.documentElement);
       fg = toRgb(style.getPropertyValue("--fg"), fg);
       accent = toRgb(style.getPropertyValue("--accent"), accent);
+      accentHi = toRgb(style.getPropertyValue("--accent-hi"), accentHi);
+      ember = toRgb(style.getPropertyValue("--ember"), ember);
       mono = style.getPropertyValue("--font-geist-mono").trim() || "monospace";
     };
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Capped: this canvas covers the whole viewport, and soft hairlines suit a dim backdrop.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       w = rect.width;
       h = rect.height;
       canvas.width = Math.round(w * dpr);
@@ -82,6 +101,13 @@ export default function AgentField({ className }: { className?: string }) {
         label: LABELS[i],
       }));
       pulses = [];
+      comets = [];
+      stars = Array.from({ length: Math.round((w * h) / 6500) }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 0.9 + 0.25,
+        phase: Math.random() * Math.PI * 2,
+      }));
       if (!running) draw();
     };
 
@@ -130,6 +156,29 @@ export default function AgentField({ className }: { className?: string }) {
         send(Math.floor(Math.random() * nodes.length));
       }
 
+      // Comets enter from the top or left edge and cross on a shallow diagonal.
+      clock += dt;
+      untilComet -= dt;
+      if (untilComet <= 0) {
+        untilComet = 2200 + Math.random() * 3800;
+        const speed = 0.5 + Math.random() * 0.35;
+        const angle = (18 + Math.random() * 22) * (Math.PI / 180);
+        const fromTop = Math.random() < 0.7;
+        comets.push({
+          x: fromTop ? Math.random() * w * 0.75 : -40,
+          y: fromTop ? -40 : Math.random() * h * 0.5,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+        });
+      }
+      for (let i = comets.length - 1; i >= 0; i--) {
+        const c = comets[i];
+        c.x += c.vx * dt;
+        c.y += c.vy * dt;
+        if (c.x > w + 300 || c.y > h + 300) comets.splice(i, 1);
+      }
+
       for (let i = pulses.length - 1; i >= 0; i--) {
         const p = pulses[i];
         p.t += dt / 720;
@@ -142,6 +191,35 @@ export default function AgentField({ className }: { className?: string }) {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+
+      for (const s of stars) {
+        ctx.fillStyle = `rgba(${fg}, ${0.12 + 0.22 * (0.5 + 0.5 * Math.sin(clock / 1100 + s.phase))})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (const c of comets) {
+        const length = 220;
+        const speed = Math.hypot(c.vx, c.vy);
+        const tx = c.x - (c.vx / speed) * length;
+        const ty = c.y - (c.vy / speed) * length;
+        const tail = ctx.createLinearGradient(c.x, c.y, tx, ty);
+        tail.addColorStop(0, `rgba(${accentHi}, 0.95)`);
+        tail.addColorStop(0.25, `rgba(${accent}, 0.55)`);
+        tail.addColorStop(1, `rgba(${ember}, 0)`);
+        ctx.strokeStyle = tail;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(c.x, c.y);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        ctx.fillStyle = `rgb(${accentHi})`;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       ctx.lineWidth = 1;
 
       for (let i = 0; i < nodes.length; i++) {

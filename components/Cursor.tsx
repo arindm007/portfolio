@@ -23,6 +23,14 @@ export default function Cursor() {
       setVisible(true);
       const target = e.target as Element | null;
       setActive(!!target?.closest?.("a, button, [data-cursor]"));
+
+      // Feed the pointer position to the glow on whichever panel is under it.
+      const panel = target?.closest?.(".spotlight") as HTMLElement | null;
+      if (panel) {
+        const rect = panel.getBoundingClientRect();
+        panel.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        panel.style.setProperty("--my", `${e.clientY - rect.top}px`);
+      }
     };
     const leave = () => setVisible(false);
 

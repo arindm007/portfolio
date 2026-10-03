@@ -18,7 +18,7 @@ export default function DailyCard({ title, brief, slug, publishedAt }: DailyCard
                 {format(new Date(publishedAt), 'MMM d, yyyy')}
             </p>
             <div className="col-span-12 transition-transform duration-700 ease-expo group-hover:translate-x-3 md:col-span-9">
-                <h3 className="font-serif text-2xl leading-tight md:text-3xl">{title}</h3>
+                <h3 className="font-display text-xl font-semibold leading-tight tracking-[-0.02em] md:text-2xl">{title}</h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{brief}</p>
             </div>
         </Link>

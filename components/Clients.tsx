@@ -38,8 +38,8 @@ export default function Clients() {
   });
 
   return (
-    <section className="overflow-hidden border-y border-line py-10 md:py-14" aria-label="Clients">
-      <FadeIn className="shell mb-6 md:mb-8" y={8}>
+    <section className="overflow-hidden border-y border-line bg-bg/70 py-10 md:py-12" aria-label="Clients">
+      <FadeIn className="shell mb-6 text-center md:mb-8" y={8}>
         <p className="label-mono">Enterprise AI training delivered for</p>
       </FadeIn>
       <motion.div className="flex w-max" style={{ x }}>
@@ -48,7 +48,7 @@ export default function Clients() {
             {clients.map((client) => (
               <li
                 key={client}
-                className="flex items-center font-serif text-[clamp(2.5rem,7vw,6rem)] leading-none tracking-[-0.02em]"
+                className="flex items-center font-display text-[clamp(1.75rem,4.2vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] text-fg/75"
               >
                 <span className="whitespace-nowrap px-6 md:px-10">{client}</span>
                 <svg viewBox="0 0 24 24" className="size-[0.32em] animate-[viz-spin_9s_linear_infinite] text-accent" aria-hidden>

@@ -4,22 +4,28 @@
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 :root {
-  --bg: #0c0c0b;
-  --surface: #141412;
-  --fg: #eceae3;
-  --muted: #8f8c82;
-  --line: rgba(236, 234, 227, 0.14);
-  --accent: #ff5a2b;
+  --bg: #060a16;
+  --surface: #0c1224;
+  --glass: rgba(12, 18, 36, 0.78);
+  --fg: #e9edf8;
+  --muted: #939bb8;
+  --line: rgba(233, 237, 248, 0.12);
+  --accent: #ffc46b;
+  --accent-hi: #ffe2b0;
+  --ember: #ff7a45;
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #f3f0e9;
-  --surface: #eae6dc;
-  --fg: #12120f;
-  --muted: #66635b;
-  --line: rgba(18, 18, 15, 0.16);
-  --accent: #dc3f14;
+  --bg: #f3f4f9;
+  --surface: #ffffff;
+  --glass: rgba(255, 255, 255, 0.82);
+  --fg: #0c1226;
+  --muted: #566083;
+  --line: rgba(12, 18, 38, 0.12);
+  --accent: #a85a00;
+  --accent-hi: #c2410c;
+  --ember: #b45309;
   color-scheme: light;
 }
 
@@ -30,9 +36,10 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-ember: var(--ember);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -55,6 +62,30 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Gold comet gradient on text. Kept static: animating clipped backgrounds crashed Chrome renderers in testing. */
+@utility text-comet {
+  background-image: linear-gradient(100deg, var(--accent-hi), var(--accent) 45%, var(--ember));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Tinted panel over the night sky. No backdrop blur: blurring over a canvas that redraws every frame is costly. */
+@utility glass {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
 }
 
 /* Underline that draws in from the left and leaves to the right. */
@@ -95,7 +126,33 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
+}
+
+/* A soft glow that follows the pointer across any .spotlight panel (set by Cursor). */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(28rem circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 13%, transparent), transparent 65%);
+  transition: opacity 0.5s;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+.spotlight:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
 }
 
 :focus-visible {
@@ -105,16 +162,6 @@ body {
 
 section[id] {
   scroll-margin-top: 4rem;
-}
-
-/* Film grain over everything, so flat colour never looks flat. */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* If scripts never run, the intro curtain still gets out of the way. */
@@ -254,8 +301,8 @@ section[id] {
   --tw-prose-captions: var(--muted);
   --tw-prose-kbd: var(--fg);
   --tw-prose-code: var(--fg);
-  --tw-prose-pre-code: #eceae3;
-  --tw-prose-pre-bg: #141412;
+  --tw-prose-pre-code: #e9edf8;
+  --tw-prose-pre-bg: #0c1224;
   --tw-prose-th-borders: var(--line);
   --tw-prose-td-borders: var(--line);
 }

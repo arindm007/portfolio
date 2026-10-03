@@ -55,7 +55,7 @@ export default function Intro({ children }: { children: React.ReactNode }) {
               </div>
               <div className="flex items-end justify-between">
                 <span className="label-mono">Agentic AI Engineer</span>
-                <span className="font-serif text-[clamp(5rem,18vw,14rem)] leading-[0.8] tabular-nums">
+                <span className="font-display text-[clamp(5rem,18vw,14rem)] font-bold leading-[0.8] tracking-[-0.05em] tabular-nums">
                   {count}
                 </span>
               </div>

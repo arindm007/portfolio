@@ -47,7 +47,7 @@ export default function Navbar() {
       <motion.header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-          scrolled && !isOpen ? "bg-bg/75 backdrop-blur-md" : "bg-transparent",
+          scrolled && !isOpen ? "bg-bg/90" : "bg-transparent",
         )}
         initial={false}
         animate={{ y: hidden && !isOpen ? "-100%" : "0%" }}
@@ -84,7 +84,7 @@ export default function Navbar() {
             <ThemeToggle />
             <SectionLink
               href={hrefFor("contact")}
-              className="hidden h-9 items-center rounded-full bg-fg px-4 text-sm font-medium text-bg transition-colors hover:bg-accent hover:text-white md:flex"
+              className="hidden h-9 items-center rounded-full bg-fg px-4 text-sm font-medium text-bg transition-colors hover:bg-accent md:flex"
             >
               Let&apos;s talk
             </SectionLink>
@@ -137,7 +137,7 @@ export default function Navbar() {
                   >
                     <SectionLink
                       href={hrefFor(section.id)}
-                      className="flex items-baseline justify-between py-3 font-serif text-5xl"
+                      className="flex items-baseline justify-between py-3 font-display text-4xl font-semibold tracking-[-0.03em]"
                       onClick={() => setIsOpen(false)}
                     >
                       {section.label}

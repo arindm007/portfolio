@@ -38,11 +38,11 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <RevealText
                         as="h1"
                         text={post.title}
-                        className="mb-5 font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1] tracking-[-0.02em]"
+                        className="mb-5 font-display text-[clamp(2.25rem,5vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.04em]"
                     />
 
                     {post.subtitle && (
-                        <p className="mb-8 font-serif text-2xl italic text-muted">
+                        <p className="mb-8 text-xl text-muted">
                             {post.subtitle}
                         </p>
                     )}
@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </div>
 
                 <div
-                    className="prose prose-theme prose-lg max-w-none prose-headings:font-serif prose-headings:font-normal"
+                    className="prose prose-theme prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:tracking-tight"
                     dangerouslySetInnerHTML={{ __html: post.content.html }}
                 />
             </article>

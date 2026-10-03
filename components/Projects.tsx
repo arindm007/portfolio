@@ -53,7 +53,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
     <div className="lg:sticky lg:mt-[14vh] lg:first:mt-0" style={stacked ? { top } : undefined}>
       <motion.article
         ref={ref}
-        className="relative grid w-full origin-top overflow-hidden rounded-3xl border border-line bg-surface lg:min-h-[39.5rem] lg:grid-cols-12"
+        className="spotlight relative grid w-full origin-top overflow-hidden rounded-[1.75rem] border border-line bg-surface lg:min-h-[39.5rem] lg:grid-cols-12"
         style={stacked ? { scale } : undefined}
       >
         <div className="flex flex-col justify-between gap-10 p-6 md:p-10 lg:col-span-7">
@@ -65,10 +65,10 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
           </div>
 
           <div>
-            <h3 className="font-serif text-[clamp(2.5rem,5vw,4.75rem)] leading-[0.95] tracking-[-0.02em]">
+            <h3 className="font-display text-[clamp(2.25rem,4.4vw,4rem)] font-bold leading-[1] tracking-[-0.04em]">
               {project.title}
             </h3>
-            <p className="mt-2 font-serif text-xl italic text-muted md:text-2xl">{project.subtitle}</p>
+            <p className="mt-3 text-lg text-muted md:text-xl">{project.subtitle}</p>
             <p className="mt-6 max-w-[62ch] text-[0.95rem] leading-relaxed text-fg/75">{project.description}</p>
           </div>
 
@@ -77,7 +77,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
               {project.metrics.map((metric) => (
                 <div key={metric.label} className="flex max-w-[15rem] flex-col-reverse">
                   <dt className="mt-1 text-xs leading-snug text-muted">{metric.label}</dt>
-                  <dd className="font-serif text-4xl leading-none">{metric.value}</dd>
+                  <dd className="text-comet font-display text-4xl font-semibold leading-none tracking-[-0.03em]">{metric.value}</dd>
                 </div>
               ))}
             </dl>
@@ -91,7 +91,7 @@ function Card({ project, index, total, progress, stacked }: CardProps) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center border-t border-line bg-bg p-6 lg:col-span-5 lg:border-l lg:border-t-0">
+        <div className="flex items-center justify-center border-t border-line bg-bg/60 p-6 lg:col-span-5 lg:border-l lg:border-t-0">
           <ProjectVisual kind={project.visual} className="aspect-square w-full max-w-[26rem] lg:max-h-full" />
         </div>
       </motion.article>
@@ -106,7 +106,11 @@ export default function Projects() {
 
   return (
     <section id="work" className="shell py-24 md:py-40">
-      <SectionHeading index="03" label="Selected work" title="Things I've built" />
+      <SectionHeading
+        label="Selected work"
+        title="Things I've built"
+        aside="Recent projects across agent platforms, multimodal inference and fine-tuned language models."
+      />
 
       <div ref={ref} className="mt-14 space-y-6 md:mt-24 lg:space-y-0">
         {projects.map((project, i) => (

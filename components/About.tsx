@@ -2,15 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView, useScroll, useTransform, type MotionValue } from "motion/react";
-import { FadeIn, Rule } from "@/components/Reveal";
+import LocalTime from "@/components/LocalTime";
+import { FadeIn } from "@/components/Reveal";
 import { profile, stats } from "@/lib/data";
 
 function Word({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
+  const opacity = useTransform(progress, range, [0.18, 1]);
   const emphasis = word.startsWith("*");
 
   return (
-    <motion.span style={{ opacity }} className={emphasis ? "italic text-accent" : undefined}>
+    <motion.span style={{ opacity }} className={emphasis ? "text-comet" : undefined}>
       {word.replaceAll("*", "")}{" "}
     </motion.span>
   );
@@ -19,13 +20,13 @@ function Word({ word, progress, range }: { word: string; progress: MotionValue<n
 /** The statement lights up word by word as it is scrolled through. */
 function Statement() {
   const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.55"] });
   const words = profile.statement.split(" ");
 
   return (
     <p
       ref={ref}
-      className="font-serif text-[clamp(1.9rem,4.4vw,4.25rem)] leading-[1.08] tracking-[-0.015em]"
+      className="font-display text-[clamp(1.5rem,2.6vw,2.4rem)] font-medium leading-[1.2] tracking-[-0.02em]"
     >
       {words.map((word, i) => (
         <Word key={i} word={word} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
@@ -55,41 +56,51 @@ function CountUp({ value }: { value: number }) {
 
 export default function About() {
   return (
-    <section id="about" className="shell py-24 md:py-40">
-      <div className="grid grid-cols-12 gap-x-6 gap-y-8">
-        <FadeIn className="col-span-12 md:col-span-3" y={8}>
-          <p className="label-mono">
-            <span className="text-accent">(01)</span> About
-          </p>
+    <section id="about" className="shell py-24 md:py-36">
+      <div className="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
+        <FadeIn className="lg:col-span-7 lg:row-span-2">
+          <div className="glass spotlight flex h-full flex-col justify-between gap-10 p-7 md:p-10">
+            <p className="eyebrow">{"// "}About</p>
+            <Statement />
+          </div>
         </FadeIn>
-        <div className="col-span-12 md:col-span-9">
-          <Statement />
-        </div>
-      </div>
 
-      <div className="mt-20 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-32">
-        <div className="col-span-12 space-y-5 md:col-span-5 md:col-start-4 lg:col-span-4 lg:col-start-4">
-          {profile.bio.map((paragraph, i) => (
-            <FadeIn key={i} delay={i * 0.1}>
-              <p className="leading-relaxed text-fg/75">{paragraph}</p>
+        <dl className="grid grid-cols-2 gap-4 md:gap-5 lg:col-span-5 lg:row-span-2">
+          {stats.map((stat, i) => (
+            <FadeIn key={stat.label} delay={0.08 * i} className="h-full">
+              <div className="glass spotlight flex h-full flex-col justify-between gap-6 p-6 md:p-7">
+                <dd className="font-display text-5xl font-semibold leading-none tracking-[-0.04em] tabular-nums md:text-6xl">
+                  <CountUp value={stat.value} />
+                  <span className="text-comet">{stat.suffix}</span>
+                </dd>
+                <dt className="text-sm leading-snug text-muted">{stat.label}</dt>
+              </div>
             </FadeIn>
           ))}
-        </div>
-
-        <dl className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-10 lg:col-span-5">
-          {stats.map((stat, i) => (
-            <div key={stat.label}>
-              <Rule delay={i * 0.08} />
-              <FadeIn delay={0.1 + i * 0.08} className="flex flex-col-reverse pt-4">
-                <dt className="mt-2 max-w-[22ch] text-sm leading-snug text-muted">{stat.label}</dt>
-                <dd className="font-serif text-6xl leading-none tabular-nums md:text-7xl">
-                  <CountUp value={stat.value} />
-                  <span className="text-accent">{stat.suffix}</span>
-                </dd>
-              </FadeIn>
-            </div>
-          ))}
         </dl>
+
+        <FadeIn className="lg:col-span-4" delay={0.1}>
+          <div className="glass spotlight flex h-full flex-col justify-between gap-8 p-7 md:p-8">
+            <p className="label-mono">Based in</p>
+            <div>
+              <p className="font-display text-3xl font-semibold tracking-[-0.03em]">{profile.location}</p>
+              <p className="label-mono mt-3 flex flex-wrap gap-x-3">
+                <span>{profile.coordinates}</span>
+                <LocalTime className="text-accent" />
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn className="lg:col-span-8" delay={0.15}>
+          <div className="glass spotlight grid h-full gap-6 p-7 md:grid-cols-2 md:p-8">
+            {profile.bio.map((paragraph, i) => (
+              <p key={i} className="leading-relaxed text-fg/75">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

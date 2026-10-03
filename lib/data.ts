@@ -9,8 +9,10 @@ export const profile = {
   coordinates: '12.97° N, 77.59° E',
   timeZone: 'Asia/Kolkata',
   email: 'arindamchakraborty6.10@gmail.com',
+  headline: 'I build AI agents that',
+  headlineAccent: 'ship to production.',
   intro:
-    'I build agentic AI systems, RAG pipelines and cloud-native backends, then embed with the teams who use them to get them into production.',
+    'Agentic AI systems, RAG pipelines and cloud-native backends, built alongside the enterprise teams who use them.',
   // Words wrapped in *asterisks* are set in accent italics.
   statement:
     'I design and ship production-grade *agentic* *AI* — agents that orchestrate tools, APIs and LLMs, the RAG pipelines that ground them, and the cloud-native backends underneath. As a *forward* *deployed* engineer I sit with enterprise teams, map how the work actually happens, and turn it into systems that *hold* *up* in production.',
